@@ -2,7 +2,7 @@
 
 Часто используемые трюки и советы при работе с Git.
 
-Хотите дополнить список? Ознакомьтесь с [contributing.md](contributing.md)
+Хотите дополнить список? Ознакомьтесь с [CONTRIBUTING.md](CONTRIBUTING.md)
 
 [English](http://git.io/git-tips) | [中文](https://github.com/521xueweihan/git-tips) | [Русский](https://github.com/Imangazaliev/git-tips)
 
@@ -17,6 +17,7 @@
 ### Branch
 
 - [Создать новую ветку и переключиться на нее](#Создать-новую-ветку-и-переключиться-на-нее)
+- [Создать новую ветку без родительской ветки](#Создать-новую-ветку-без-родительской-ветки)
 - [Быстрое переключение на предыдущую ветку](#Быстрое-переключение-на-предыдущую-ветку)
 - [Список локальных и удаленных веток](#Список-локальных-и-удаленных-веток)
 - [Список веток в удаленном репозитории](#Список-веток-в-удаленном-репозитории)
@@ -24,7 +25,10 @@
 - [Переименовать ветку](#Переименовать-ветку)
 - [Удалить локальную ветку](#Удалить-локальную-ветку)
 - [Удалить ветку в удаленном репозитории](#Удалить-ветку-в-удаленном-репозитории)
+- [Показать название текущей ветки](#Показать-название-текущей-ветки)
+- [Показать все ветки, не слитые в master](#Показать-все-ветки-не-слитые-в-master)
 - [Показать список веток, которые уже слиты с веткой master](#Показать-список-веток-которые-уже-слиты-с-веткой-master)
+- [Переместить ветку feature на master и слить ее в мастер](#Переместить-ветку-feature-на-master-и-слить-ее-в-мастер)
 - [Удалить ветки, которые уже слиты с master](#Удалить-ветки-которые-уже-слиты-с-master)
 - [Найти ветки, которые содержат коммит с указанным хешем](#Найти-ветки-которые-содержат-коммит-с-указанным-хешем)
 - [Track upstream branch](#track-upstream-branch)
@@ -44,7 +48,7 @@
 - [Показать конфиг и все псевдонимы (alias)](#Показать-конфиг-и-все-псевдонимы-alias)
 - [Изменить локальный/глобальный конфиг git](#Изменить-локальныйглобальный-конфиг-git)
 - [Изменить текстовый редактор](#Изменить-текстовый-редактор)
-- [Игнорировать изменения прав доступа на файлы при коммите](#Игнорировать-изменения-прав-доступа-на-файлы-при-коммите)
+- [Игнорировать изменения прав доступа к файлам при коммите](#Игнорировать-изменения-прав-доступа-к-файлам-при-коммите)
 - [Сделать git чувствительным к регистру](#Сделать-git-чувствительным-к-регистру)
 - [Включить автоматическое исправление опечаток](#Включить-автоматическое-исправление-опечаток)
 - [Отключить цветной вывод Git](#Отключить-цветной-вывод-git)
@@ -64,34 +68,61 @@
 - [Открыть все конфликтующие файлы в редакторе](#Открыть-все-конфликтующие-файлы-в-редакторе)
 - [Список всех файлов, которые были изменены в коммите](#Список-всех-файлов-которые-были-изменены-в-коммите)
 
+### Index
+
+- [Интерактивное добавление файлов в индекс](#Интерактивное-добавление-файлов-в-индекс)
+- [Добавить в индекс часть файла](#Добавить-в-индекс-часть-файла)
+- [Удалить файл из индекса](#Удалить-файл-из-индекса)
+- [Удалить все файлы из индекса](#Удалить-все-файлы-из-индекса)
+
 ### Log
 
 - [Показать логи за определенный период (от-до)](#Показать-логи-за-определенный-период-от-до)
+- [Показать коммиты за указанный промежуток времени](#Показать-коммиты-за-указанный-промежуток-времени)
 - [Показать историю коммитов, сгрупировав их по имени автора](#Показать-историю-коммитов-сгрупировав-их-по-имени-автора)
 - [Показать историю коммитов, исключив коммиты указанного автора](#Показать-историю-коммитов-исключив-коммиты-указанного-автора)
 - [Показать коммиты и изменения в них для определенного файла (даже если он был переименован)](#Показать-коммиты-и-изменения-в-них-для-определенного-файла-даже-если-он-был-переименован)
 - [List only the root and merge commits](#list-only-the-root-and-merge-commits)
 - [Показать незапушенные коммиты](#Показать-незапушенные-коммиты)
 - [Показать все коммиты с момента отделения от ветки master](#Показать-все-коммиты-с-момента-отделения-от-ветки-master)
-- [Коммиты в ветке Branch1, которых нет в Branch2](#Коммиты-в-ветке-branch1-которых-нет-в-branch2)
+- [Коммиты в ветке branch-1, которых нет в branch-2](#Коммиты-в-ветке-branch-1-которых-нет-в-branch-2)
 - [Показать GPG-сигнатуру в истории коммитов](#Показать-gpg-сигнатуру-в-истории-коммитов)
 - [Показать количество строк, которое добавил/удалил пользователь](#Показать-количество-строк-которое-добавилудалил-пользователь)
-- [Search Commit log across all branches for given text](#search-commit-log-across-all-branches-for-given-text)
+- [Поиск в истории коммитов по регулярному выражению](#Поиск-в-истории-коммитов-по-регулярному-выражению)
 - [Показать все заметки (git notes)](#Показать-все-заметки-git-notes)
 - [Показать дерево тегов (версий)](#Показать-дерево-тегов-версий)
 - [Get first commit in a branch (from master)](#get-first-commit-in-a-branch-from-master)
+
+### Merge
+
+- [Слить ветку feature с master, объединив все коммиты ветки feature в один](#Слить-ветку-feature-с-master-объединив-все-коммиты-ветки-feature-в-один)
+
+### Push
+
+- [Отправить коммиты в удаленный репозиторий, перезаписав историю (force push)](#Отправить-коммиты-в-удаленный-репозиторий-перезаписав-историю-force-push)
+- [Forced push but still ensure you don't overwrite other's work](#forced-push-but-still-ensure-you-dont-overwrite-others-work)
+
+### Show
+
+- [Показать изменения в коммите](#Показать-изменения-в-коммите)
+- [Показать изменения в коммите (по хешу)](#Показать-изменения-в-коммите-по-хешу)
 
 ### Stash
 
 - [Спрятать текущие изменения для отслеживаемых файлов](#Спрятать-текущие-изменения-для-отслеживаемых-файлов)
 - [Спрятать текущие изменения, включая неотслеживаемые файлы](#Спрятать-текущие-изменения-включая-неотслеживаемые-файлы)
+- [Спрятать текущие изменения за исключением файлов в индексе](#Спрятать-текущие-изменения-за-исключением-файлов-в-индексе)
+- [Спрятать только часть файла (файлов)](#Спрятать-только-часть-файла-файлов)
 - [Показать список спрятанных изменений](#Показать-список-спрятанных-изменений)
 - [Применить последние спрятанные изменения и удалить их из стека](#Применить-последние-спрятанные-изменения-и-удалить-их-из-стека)
 - [Применить последние спрятанные изменения без удаления их из стека](#Применить-последние-спрятанные-изменения-без-удаления-их-из-стека)
+- [Извлечь отдельный файл из stash](#Извлечь-отдельный-файл-из-stash)
 - [Очистить stash](#Очистить-stash)
 
 ### Tags
 
+- [Создать новый тег](#Создать-новый-тег)
+- [Отправить теги на удаленный репозиторий](#Отправить-теги-на-удаленный-репозиторий)
 - [Удалить тег в локальном репозитории](#Удалить-тег-в-локальном-репозитории)
 - [Удалить тег в удаленном репозитории](#Удалить-тег-в-удаленном-репозитории)
 
@@ -112,40 +143,32 @@
 - [Показать самый последний тег на текущей ветке](#Показать-самый-последний-тег-на-текущей-ветке)
 - [Revert: отменить коммит с помощью нового коммита](#revert-отменить-коммит-с-помощью-нового-коммита)
 - [Revert: отменить слияние (merge) с помощью нового коммита](#revert-отменить-слияние-merge-с-помощью-нового-коммита)
-- [Reset: Discard commits, advised for private branch](#reset-discard-commits-advised-for-private-branch)
-- [Удалить файл из индекса](#Удалить-файл-из-индекса)
+- [Reset: Отменить коммиты (сброс к указанному коммиту)](#reset-Отменить-коммиты-сброс-к-указанному-коммиту)
 - [Показать историю коммитов только для текущей ветки](#Показать-историю-коммитов-только-для-текущей-ветки)
 - [Показать список удаленных репозиториев](#Показать-список-удаленных-репозиториев)
 - [Изменить URL удаленного репозитория](#Изменить-url-удаленного-репозитория)
 - [List references in a remote repository](#list-references-in-a-remote-repository)
 - [Добавить удаленный репозиторий](#Добавить-удаленный-репозиторий)
-- [Добавить в индекс часть файла](#Добавить-в-индекс-часть-файла)
 - [Автокомплит Git-команд в bash](#Автокомплит-git-команд-в-bash)
-- [Изменения за указанный промежуток времени](#Изменения-за-указанный-промежуток-времени)
 - [Перенести коммиты из одной ветки в другую с помощью cherry-pick](#Перенести-коммиты-из-одной-ветки-в-другую-с-помощью-cherry-pick)
-- [Извлечь отдельный файл из stash](#Извлечь-отдельный-файл-из-stash)
 - [Undo local changes with the last content in head](#undo-local-changes-with-the-last-content-in-head)
-- [Создать новую ветку без родительской ветки](#Создать-новую-ветку-без-родительской-ветки)
-- [Показать все ветки, не слитые в master](#Показать-все-ветки-не-слитые-в-master)
 - [Показать все отслеживаемы файлы](#Показать-все-отслеживаемы-файлы)
 - [Показать все неотслеживаемые файлы](#Показать-все-неотслеживаемые-файлы)
 - [Показать все игнорируемые файлы](#Показать-все-игнорируемые-файлы)
 - [Create new working tree from a repository (git 2.5)](#create-new-working-tree-from-a-repository-git-25)
 - [Create new working tree from HEAD state](#create-new-working-tree-from-head-state)
-- [Не отслеживать файлы (без удаления)](#Не-отслеживать-файлы-без-удаления)
+- [Не отслеживать файл (без удаления)](#Не-отслеживать-файл-без-удаления)
 - [Before deleting untracked files/directory, do a dry run to get the list of these files/directories](#before-deleting-untracked-filesdirectory-do-a-dry-run-to-get-the-list-of-these-filesdirectories)
 - [Принудительно удалить неотслеживаемые файлы](#Принудительно-удалить-неотслеживаемые-файлы)
 - [Принудительно удалить неотслеживаемую директорию](#Принудительно-удалить-неотслеживаемую-директорию)
 - [Обновить все субмодули](#Обновить-все-субмодули)
 - [Показать коммиты текущей ветки, которые будут слиты в мастер](#Показать-коммиты-текущей-ветки-которые-будут-слиты-в-мастер)
-- [Переместить ветку 'feature' на 'master' и слить ее в мастер](#Переместить-ветку-feature-на-master-и-слить-ее-в-мастер)
-- [Архивировать ветку master](#Архивировать-ветку-master)
 - [Retrieve the commit hash of the initial revision](#retrieve-the-commit-hash-of-the-initial-revision)
 - [Deploying git tracked subfolder to gh-pages](#deploying-git-tracked-subfolder-to-gh-pages)
 - [Adding a project to repo using subtree](#adding-a-project-to-repo-using-subtree)
 - [Get latest changes in your repo for a linked project using subtree](#get-latest-changes-in-your-repo-for-a-linked-project-using-subtree)
-- [Эспортировать ветку в файл (создать пакет)](#Эспортировать-ветку-в-файл-создать-пакет)
-- [Показать название текущей ветки](#Показать-название-текущей-ветки)
+- [Экспортировать ветку в файл (создать пакет)](#Экспортировать-ветку-в-файл-создать-пакет)
+- [Архивировать ветку master](#Архивировать-ветку-master)
 - [Ignore one file on commit (e.g. Changelog)](#ignore-one-file-on-commit-eg-changelog)
 - [Спрятать изменения перед выполнением перемещения](#Спрятать-изменения-перед-выполнением-перемещения)
 - [Show changes using common diff tools](#show-changes-using-common-diff-tools)
@@ -157,7 +180,6 @@
 - [Check if the change was a part of a release](#check-if-the-change-was-a-part-of-a-release)
 - [Dry run (any command that supports dry-run flag should do)](#dry-run-any-command-that-supports-dry-run-flag-should-do)
 - [Squash fixup commits normal commits](#squash-fixup-commits-normal-commits)
-- [Интерактивное добавление файлов в индекс](#Интерактивное-добавление-файлов-в-индекс)
 - [Показать список игнорируемых файлов](#Показать-список-игнорируемых-файлов)
 - [Статус игнорируемых файлов](#Статус-игнорируемых-файлов)
 - [Count unpacked number of objects and their disk consumption](#count-unpacked-number-of-objects-and-their-disk-consumption)
@@ -168,8 +190,6 @@
 - [Поиск коммита с багом при помощи бинарного поиска](#Поиск-коммита-с-багом-при-помощи-бинарного-поиска)
 - [Показать все локальные ветки, отсортировав их по дате изменения](#Показать-все-локальные-ветки-отсортировав-их-по-дате-изменения)
 - [Find lines matching the pattern (regex or string) in tracked files](#find-lines-matching-the-pattern-regex-or-string-in-tracked-files)
-- [Отправить коммиты в удаленный репозиторий, перезаписав историю (force push)](#Отправить-коммиты-в-удаленный-репозиторий-перезаписав-историю-force-push)
-- [Forced push but still ensure you don't overwrite other's work](#forced-push-but-still-ensure-you-dont-overwrite-others-work)
 - [Количество коммитов в ветке](#Количество-коммитов-в-ветке)
 - [Добавить заметку](#Добавить-заметку)
 - [Apply commit from another repository](#apply-commit-from-another-repository)
@@ -189,6 +209,9 @@
 
 <!-- @doxie.inject start -->
 <!-- Don’t remove or change the comment above – that can break automatic updates. -->
+
+## Branch
+
 ### Создать новую ветку и переключиться на нее
 ```sh
 git checkout -b <branch-name>
@@ -197,6 +220,11 @@ git checkout -b <branch-name>
 __Alternatives:__
 ```sh
 git branch <branch-name> && git checkout <branch-name>
+```
+
+### Создать новую ветку без родительской ветки
+```sh
+git checkout --orphan <branch-name>
 ```
 
 ### Быстрое переключение на предыдущую ветку
@@ -231,22 +259,37 @@ git branch -m [<old-branch-name>] <new-branch-name>
 
 ### Удалить локальную ветку
 ```sh
-git branch -d <local_branchname>
+git branch -d <local-branch-name>
 ```
 
 ### Удалить ветку в удаленном репозитории
 ```sh
-git push origin --delete <remote_branchname>
+git push origin --delete <remote-branch-name>
 ```
 
 __Alternatives:__
 ```sh
-git push origin :<remote_branchname>
+git push origin :<remote-branch-name>
+```
+
+### Показать название текущей ветки
+```sh
+git rev-parse --abbrev-ref HEAD
+```
+
+### Показать все ветки, не слитые в master
+```sh
+git checkout master && git branch --no-merged
 ```
 
 ### Показать список веток, которые уже слиты с веткой master
 ```sh
 git branch --merged master
+```
+
+### Переместить ветку feature на master и слить ее в мастер
+```sh
+git rebase master feature && git checkout master && git merge -
 ```
 
 ### Удалить ветки, которые уже слиты с master
@@ -273,9 +316,18 @@ git branch --contains <commit-ish>
 ```sh
 git branch -u origin/mybranch
 ```
+
+## Commit
+
 ### Изменить сообщение последнего коммита
+При выполнении команды откроется редактор, указанный в настройках git. Необходимо изменить текст сообщения, сохранить файл и закрыть редактор.
+
+Сообщение можно указать и непосредственно при вызове команды с помощью опции `-m` (`--message`)
 ```sh
 git commit --amend
+
+# можно указать сообщение с помощью опции -m
+git commit --amend -m "New message"
 ```
 
 ### Изменить предыдущий коммит без изменения сообщения к коммиту
@@ -303,10 +355,18 @@ git commit --only <file_path>
 git commit --no-verify
 ```
 
+__Alternatives:__
+```sh
+git commit -n
+```
+
 ### Отметить коммит как исправление к указанному коммиту
 ```sh
 git commit --fixup <SHA-1>
 ```
+
+## Config
+
 ### Показать конфиг и все псевдонимы (alias)
 ```sh
 git config --list
@@ -322,7 +382,7 @@ git config [--global] --edit
 git config --global core.editor '$EDITOR'
 ```
 
-### Игнорировать изменения прав доступа на файлы при коммите
+### Игнорировать изменения прав доступа к файлам при коммите
 ```sh
 git config core.fileMode false
 ```
@@ -373,6 +433,9 @@ git config --global branch.autosetuprebase always
 git config --global alias.<handle> <command> 
 git config --global alias.st status
 ```
+
+## Diff
+
 ### Показать изменения с момента последнего коммита
 ```sh
 git diff
@@ -412,9 +475,44 @@ git diff --name-only | uniq | xargs $EDITOR
 ```sh
 git diff-tree --no-commit-id --name-only -r <commit-ish>
 ```
+
+## Index
+
+### Интерактивное добавление файлов в индекс
+```sh
+git add -i
+```
+
+### Добавить в индекс часть файла
+```sh
+git add -p
+```
+
+### Удалить файл из индекса
+```sh
+git reset HEAD <file-name>
+```
+
+### Удалить все файлы из индекса
+```sh
+git reset HEAD
+```
+
+## Log
+
 ### Показать логи за определенный период (от-до)
 ```sh
 git log --since='FEB 1 2017' --until='FEB 14 2017'
+```
+
+### Показать коммиты за указанный промежуток времени
+```sh
+git log --no-merges --raw --since='2 weeks ago'
+```
+
+__Alternatives:__
+```sh
+git whatchanged --since='2 weeks ago'
 ```
 
 ### Показать историю коммитов, сгрупировав их по имени автора
@@ -457,9 +555,9 @@ git cherry -v
 git log --no-merges --stat --reverse master..
 ```
 
-### Коммиты в ветке Branch1, которых нет в Branch2
+### Коммиты в ветке branch-1, которых нет в branch-2
 ```sh
-git log Branch1 ^Branch2
+git log branch-1 ^branch-2
 ```
 
 ### Показать GPG-сигнатуру в истории коммитов
@@ -469,17 +567,17 @@ git log --show-signature
 
 ### Показать количество строк, которое добавил/удалил пользователь
 ```sh
-git log --author='_Your_Name_Here_' --pretty=tformat: --numstat | gawk '{ add += <!-- @doxie.inject start -->; subs += <!-- @doxie.inject end -->; loc += <!-- @doxie.inject start --> - <!-- @doxie.inject end --> } END { printf "added lines: %s removed lines: %s total lines: %s
+git log --author='Your Name Here' --pretty=tformat: --numstat | gawk '{ add += <!-- @doxie.inject start -->; subs += <!-- @doxie.inject end -->; loc += <!-- @doxie.inject start --> - <!-- @doxie.inject end --> } END { printf "added lines: %s removed lines: %s total lines: %s
 ", add, subs, loc }' -
 ```
 
 __Alternatives:__
 ```sh
-git log --author='_Your_Name_Here_' --pretty=tformat: --numstat | awk '{ add += <!-- @doxie.inject start -->; subs += <!-- @doxie.inject end -->; loc += <!-- @doxie.inject start --> - <!-- @doxie.inject end --> } END { printf "added lines: %s, removed lines: %s, total lines: %s
+git log --author='Your Name Here' --pretty=tformat: --numstat | awk '{ add += <!-- @doxie.inject start -->; subs += <!-- @doxie.inject end -->; loc += <!-- @doxie.inject start --> - <!-- @doxie.inject end --> } END { printf "added lines: %s, removed lines: %s, total lines: %s
 ", add, subs, loc }' - # on Mac OSX
 ```
 
-### Search Commit log across all branches for given text
+### Поиск в истории коммитов по регулярному выражению
 ```sh
 git log --all --grep='<given-text>'
 ```
@@ -503,6 +601,47 @@ gitk --all
 ```sh
 git log master..<branch-name> --oneline | tail -1
 ```
+
+## Merge
+
+### Слить ветку feature с master, объединив все коммиты ветки feature в один
+При этом коммит слияния не будет создан, вам нужно будет сделать его вручную.
+```sh
+git merge feature --squash
+```
+
+## Push
+
+### Отправить коммиты в удаленный репозиторий, перезаписав историю (force push)
+```sh
+git push --force
+```
+
+__Alternatives:__
+```sh
+git push -f
+```
+
+### Forced push but still ensure you don't overwrite other's work
+```sh
+git push --force-with-lease <remote-name> <branch-name>
+```
+
+## Show
+
+### Показать изменения в коммите
+Также можно использовать `HEAD~1`, `HEAD~2` и т.д. для просмотра предыдущих коммитов.
+```sh
+git show HEAD
+```
+
+### Показать изменения в коммите (по хешу)
+```sh
+git show <commit-ish>
+```
+
+## Stash
+
 ### Спрятать текущие изменения для отслеживаемых файлов
 ```sh
 git stash
@@ -515,12 +654,23 @@ git stash save
 
 ### Спрятать текущие изменения, включая неотслеживаемые файлы
 ```sh
-git stash save -u
+git stash -u
 ```
 
 __Alternatives:__
 ```sh
-git stash save --include-untracked
+git stash --include-untracked
+```
+
+### Спрятать текущие изменения за исключением файлов в индексе
+```sh
+git stash --keep-index
+```
+
+### Спрятать только часть файла (файлов)
+Позволяет выбрать изменения, которые необходимо скрыть
+```sh
+git stash -p
 ```
 
 ### Показать список спрятанных изменений
@@ -543,6 +693,16 @@ git stash apply stash@{0} && git stash drop stash@{0}
 git stash apply <stash@{n}>
 ```
 
+### Извлечь отдельный файл из stash
+```sh
+git checkout <stash@{n}> -- <file_path>
+```
+
+__Alternatives:__
+```sh
+git checkout stash@{0} -- <file_path>
+```
+
 ### Очистить stash
 ```sh
 git stash clear
@@ -552,6 +712,19 @@ __Alternatives:__
 ```sh
 git stash drop <stash@{n}>
 ```
+
+## Tags
+
+### Создать новый тег
+```sh
+git tag <tag-name>
+```
+
+### Отправить теги на удаленный репозиторий
+```sh
+git push --tags
+```
+
 ### Удалить тег в локальном репозитории
 ```sh
 git tag -d <tag-name>
@@ -561,6 +734,18 @@ git tag -d <tag-name>
 ```sh
 git push origin :refs/tags/<tag-name>
 ```
+
+__Alternatives:__
+```sh
+git push origin :<tag-name>
+```
+
+```sh
+git push -d origin <tag-name>
+```
+
+## Разное
+
 ### Everyday Git in twenty commands or so
 ```sh
 git help everyday
@@ -646,14 +831,9 @@ git revert <commit-ish>
 git revert -m 1 <commit-ish>
 ```
 
-### Reset: Discard commits, advised for private branch
+### Reset: Отменить коммиты (сброс к указанному коммиту)
 ```sh
 git reset <commit-ish>
-```
-
-### Удалить файл из индекса
-```sh
-git reset HEAD <file-name>
 ```
 
 ### Показать историю коммитов только для текущей ветки
@@ -686,24 +866,9 @@ git ls-remote git://git.kernel.org/pub/scm/git/git.git
 git remote add <remote-nickname> <remote-url>
 ```
 
-### Добавить в индекс часть файла
-```sh
-git add -p
-```
-
 ### Автокомплит Git-команд в bash
 ```sh
 curl http://git.io/vfhol > ~/.git-completion.bash && echo '[ -f ~/.git-completion.bash ] && . ~/.git-completion.bash' >> ~/.bashrc
-```
-
-### Изменения за указанный промежуток времени
-```sh
-git log --no-merges --raw --since='2 weeks ago'
-```
-
-__Alternatives:__
-```sh
-git whatchanged --since='2 weeks ago'
 ```
 
 ### Перенести коммиты из одной ветки в другую с помощью cherry-pick
@@ -711,29 +876,9 @@ git whatchanged --since='2 weeks ago'
 git checkout <branch-name> && git cherry-pick <commit-ish>
 ```
 
-### Извлечь отдельный файл из stash
-```sh
-git checkout <stash@{n}> -- <file_path>
-```
-
-__Alternatives:__
-```sh
-git checkout stash@{0} -- <file_path>
-```
-
 ### Undo local changes with the last content in head
 ```sh
 git checkout -- <file_name>
-```
-
-### Создать новую ветку без родительской ветки
-```sh
-git checkout --orphan <branch_name>
-```
-
-### Показать все ветки, не слитые в master
-```sh
-git checkout master && git branch --no-merged
 ```
 
 ### Показать все отслеживаемы файлы
@@ -761,7 +906,8 @@ git worktree add -b <branch-name> <path> <start-point>
 git worktree add --detach <path> HEAD
 ```
 
-### Не отслеживать файлы (без удаления)
+### Не отслеживать файл (без удаления)
+Удаляет файл из git, сохраняя при этом его локальную копию
 ```sh
 git rm --cached <file_path>
 ```
@@ -815,16 +961,6 @@ __Alternatives:__
 git cherry -v master <branch-to-be-merged>
 ```
 
-### Переместить ветку 'feature' на 'master' и слить ее в мастер
-```sh
-git rebase master feature && git checkout master && git merge -
-```
-
-### Архивировать ветку master
-```sh
-git archive master --format=zip --output=master.zip
-```
-
 ### Retrieve the commit hash of the initial revision
 ```sh
  git rev-list --reverse HEAD | head -1
@@ -858,14 +994,14 @@ git subtree add --prefix=<directory_name>/<project_name> --squash git@github.com
 git subtree pull --prefix=<directory_name>/<project_name> --squash git@github.com:<username>/<project_name>.git master
 ```
 
-### Эспортировать ветку в файл (создать пакет)
+### Экспортировать ветку в файл (создать пакет)
 ```sh
 git bundle create <file> <branch-name>
 ```
 
-### Показать название текущей ветки
+### Архивировать ветку master
 ```sh
-git rev-parse --abbrev-ref HEAD
+git archive master --format=zip --output=master.zip
 ```
 
 ### Ignore one file on commit (e.g. Changelog)
@@ -921,11 +1057,6 @@ git clean -fd --dry-run
 ### Squash fixup commits normal commits
 ```sh
 git rebase -i --autosquash
-```
-
-### Интерактивное добавление файлов в индекс
-```sh
-git add -i
 ```
 
 ### Показать список игнорируемых файлов
@@ -984,16 +1115,6 @@ git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/
 git grep --heading --line-number 'foo bar'
 ```
 
-### Отправить коммиты в удаленный репозиторий, перезаписав историю (force push)
-```sh
-git push -f <remote-name> <branch-name>
-```
-
-### Forced push but still ensure you don't overwrite other's work
-```sh
-git push --force-with-lease <remote-name> <branch-name>
-```
-
 ### Количество коммитов в ветке
 ```sh
 git rev-list --count <branch-name>
@@ -1015,13 +1136,14 @@ diff -u <(git rev-list --first-parent BranchA) <(git rev-list --first-parent Bra
 ```
 
 ### Показывает автора, время и хеш-коммита последнего изменения для каждой строки файла
+Также можно выполнить команду с флагом `-s` для того, чтобы показывать автора и время коммита
 ```sh
 git blame <file-name>
 ```
 
 ### Показывает автора, время и хеш-коммита последнего изменения для указанного диапазона строк
 ```sh
-git blame -L <start>,<end>
+git blame <file-name> -L <start>,<end>
 ```
 
 ### Show a Git logical variable
